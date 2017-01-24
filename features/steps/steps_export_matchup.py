@@ -16,5 +16,4 @@ def step_impl(context):
 
 @then(u'a netcdf file should be saved on the disk')
 def step_impl(context):
-    os.path.exists(context.matchup.output_filepath)
-    raise NotImplementedError(u'STEP: Then a netcdf file should be saved on the disk')
+    assert os.path.exists(context.matchup.output_filepath)
