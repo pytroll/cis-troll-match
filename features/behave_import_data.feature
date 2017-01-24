@@ -5,7 +5,7 @@ Feature: Input formats
 
     1st priority
     ------------
-        * MODIS L1B
+        * MODIS L1B (indicate the sensor or product)
         * AVHRR L1B (GAC and LAC)
         * VIIRS SDR
         * MSG
@@ -13,9 +13,9 @@ Feature: Input formats
         * GOES-R,
         * NWC SAF PPS products (v2014 and v2018)
         * GEO NWC SAF products (cloud products only)
-        * CM SAF (cloud products),
+        * CM SAF (cloud products), # indicate
         * MODIS L2 (collection 5 (priority 2) and 6 (priority 1)):
-             * cloud products
+             * cloud products # indicate
              * aerosol products
         * OCA format (discuss with Phil to identify the format version)
 
