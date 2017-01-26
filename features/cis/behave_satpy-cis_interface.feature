@@ -8,5 +8,7 @@ Feature:  Provide interface between CIS and Satpy
         When there satpy scene is available
         And satpy scene contains dataset
         Then make CIS Ungridded dataset out of it
+        Then collocate ungrided dataset with itself
+        Then ungrided dataset with itself with 15 minutes time constraint
 
 
