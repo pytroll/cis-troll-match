@@ -11,6 +11,6 @@ Feature: Allow to apply various corrections to unreduced data
         Then parallax correction is applied
     
     Scenario: Apply custom quality flags
-        Given We have a file with cloud top height data available
+        Given We have a file with quality flags is available
         When the file is loaded
-        Then parallax correction is applied
+        Then quality flags are applied
