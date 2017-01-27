@@ -9,7 +9,12 @@ setuptools.setup(name='trollmatch',
                  author_email='itkin.m@gmail.com',
                  url='https://pytroll.org',
                  py_modules=['trollmatch'],
-                 install_requires=['satpy', 'cis'],
+
+                 install_requires=['satpy',
+                                    'cis',
+                                    'numpy',
+                                    'trollsched'],
+
                  license='Lesser GPL v3.0',
                  zip_safe=False,
                  keywords='satellite observations gis measurements matchups',
