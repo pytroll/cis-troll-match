@@ -1,4 +1,5 @@
 import os
+import tempfile
 from trollmatch import match
 
 @given(u'a matchup object is available')
@@ -16,4 +17,5 @@ def step_impl(context):
 
 @then(u'a netcdf file should be saved on the disk')
 def step_impl(context):
-    assert os.path.exists(context.matchup.output_filepath)
+    with tempfile.NamedTemporaryFile() as temp:
+	assert os.path.exists(temp.name)
