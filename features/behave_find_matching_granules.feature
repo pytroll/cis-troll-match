@@ -7,6 +7,7 @@ Feature: Simulate granules coverage to find granules for downloading
     downloaded using and API provided by the user. The same list of files
     is useful in case the granules are available on users' disk locally.
 
+    @wip
     Scenario: Get filename for a single granule over a single point
         When we have a single point measurement
         And we look for the closest overpass to the particular timestamp
