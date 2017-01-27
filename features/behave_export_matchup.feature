@@ -6,7 +6,6 @@ Feature: Export resulting matchups
   The output format should either be guessed from the file extension or
   "format" string should be provided
 
-  @wip
   Scenario: Export netcdf matchups
     Given a matchup object is available
     When export command is called
