@@ -2,3 +2,4 @@ trollmatch.egg-info/*
 doc/build/*
 *.pyc
 trollmatch/*.pyc
+tags
