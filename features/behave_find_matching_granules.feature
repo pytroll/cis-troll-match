@@ -10,6 +10,7 @@ Feature: Simulate granules coverage to find granules for downloading
     @wip
     Scenario: Get filename for a single granule over a single point
         When we have a single point measurement
+        And we have an object that describes satellite observations
         And we look for the closest overpass to the particular timestamp
         Then we receive a filename
 

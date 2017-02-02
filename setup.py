@@ -1,14 +1,14 @@
 import setuptools
-from trollmatch import version
+from ctmatch import version
 
-setuptools.setup(name='trollmatch',
+setuptools.setup(name='ctmatch',
                  version=version.__version__,
                  description='Python package for matching spatial observations',
                  long_description=open('README.md').read().strip(),
                  author=open('AUTHORS').read().strip(),
                  author_email='itkin.m@gmail.com',
                  url='https://pytroll.org',
-                 py_modules=['trollmatch'],
+                 py_modules=['ctmatch'],
 
                  install_requires=['satpy',
                                     'cis',

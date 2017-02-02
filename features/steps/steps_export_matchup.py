@@ -1,10 +1,10 @@
 import os
 import tempfile
-from trollmatch import match
+from ctmatch import matchups
 
 @given(u'a matchup object is available')
 def step_impl(context):
-    context.matchup = match.Matchup()
+    context.matchup = matchups.Matchup()
 
 @when(u'the output format is "netcdf"')
 def step_impl(context):
