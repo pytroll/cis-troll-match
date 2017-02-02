@@ -10,6 +10,7 @@ Welcome to Trollmatch's documentation!
    :maxdepth: 4
    :caption: Contents:
 
+   installation
    contributing
 
 
