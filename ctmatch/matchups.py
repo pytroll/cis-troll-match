@@ -2,9 +2,11 @@ from pygranule.orbital_granule_filter import OrbitalGranuleFilter
 from datetime import datetime
 from datetime import timedelta
 
+
 class Obs(object):
     def __init__(self):
         pass
+
 
 class SatObs(Obs):
     def __init__(self):
@@ -31,14 +33,14 @@ class SatObs(Obs):
             self.granule_filter = self.make_orbital_granule_filter()
 
     def make_granule_config(self):
-        config = {'config_name':"DummySatData",
-                  'sat_name':"NOAA 19",
-                  'instrument':"AVHRR",
-                  'protocol':"sftp",
-                  'server':"sat@localhost",
-                  'file_source_pattern':"/home/msg/archive/AVHRR/avhrr_%Y%m%d_%H%M00_noaa19.hrp.bz2",
-                  'granule_duration':"00:02:00",
-                  'area_of_interest':"(0.0,73.0),(0.0,61.0),(-30.0,61.0),(-39,63.5),(-55.666,63.5),(-57.75,65),(-76,76),(-75,78)"}
+        config = {'config_name': "DummySatData",
+                  'sat_name': "NOAA 19",
+                  'instrument': "AVHRR",
+                  'protocol': "sftp",
+                  'server': "sat@localhost",
+                  'file_source_pattern': "avhrr_%Y%m%d_%H%M00_noaa19.hrp.bz2",
+                  'granule_duration': "00:02:00",
+                  'area_of_interest': "(0.0,73.0),(0.0,61.0),(-30.0,61.0)"}
         self.granule_config = config
         return config
 
@@ -49,7 +51,7 @@ class SatObs(Obs):
                                       "2 29499  98.6804 312.6735 0001758 111.9178 248.2152 14.21501774254058")
         # generate some filenames
         self.output_filenames = []
-        self.start_time = datetime(2014,2,25,13,30)
+        self.start_time = datetime(2014, 2, 25, 13, 30)
         self.end_time = datetime(2014, 2, 25, 13, 35)
         self.time_step = timedelta(minutes=2.0)
         t = self.start_time
