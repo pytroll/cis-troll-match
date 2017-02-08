@@ -12,7 +12,7 @@ Feature: Simulate granules coverage to find granules for downloading
         When we have a single point measurement
         And we have an object that describes satellite observations
         And we look for the closest overpass to the current timestamp
-        Then we receive a filename
+        Then we receive a list of overpassing granule filenames
 
     # Scenario: Get filename for a single granule over a transect
     #     When we have a transect measurement
