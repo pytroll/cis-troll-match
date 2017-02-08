@@ -19,7 +19,7 @@ def step_impl(context):
               'instrument': "AVHRR",
               'file_source_pattern': "avhrr_%Y%m%d_%H%M00_noaa19.hrp.bz2",
               'granule_duration': "00:02:00",
-              'area_of_interest': "(0.0,73.0),(0.0,61.0),(-30.0,61.0)"}
+              'area_of_interest': "(0.0,73.0)"}
 
     tle1 = "1 29499U 06044A   11254.96536486  .00000092  00000-0  62081-4 0 5221"
     tle2 = "2 29499  98.6804 312.6735 0001758 111.9178 248.2152 14.21501774254058"
