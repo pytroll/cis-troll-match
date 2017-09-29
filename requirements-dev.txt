@@ -1,3 +1,7 @@
 sphinx
 behave
 nose
+python-hdf4
+netCDF4
+satpy
+
