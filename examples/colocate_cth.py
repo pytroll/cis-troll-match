@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 from cis.data_io import ungridded_data
-from cis.data_io.ungridded_data import UngriddedData, Metadata
+from cis.data_io.ungridded_data import Metadata
 from cis.data_io.Coord import Coord, CoordList
-from cis.data_io.ungridded_data import UngriddedCoordinates, UngriddedData
-from cis.collocation.col_implementations import nn_time, sum, mean, nn_horizontal_kdtree, nn_horizontal
-from matplotlib import pyplot
+from cis.data_io.ungridded_data import UngriddedData
+from cis.collocation.col_implementations import nn_horizontal
+
 import os
 import glob
-import datetime as dt
-import matplotlib.pyplot as plt
-from satpy import Scene
+
 from datetime import datetime
 from datetime import timedelta
 import h5py
@@ -35,7 +33,7 @@ def load_calipso_cth(filename):
     lons = Coord(lon, Metadata(standard_name='longitude', units='degrees'), 'x')
     time = Coord(time, Metadata(standard_name='time', units='days since 2015-07-11'), axis='t')
     ungridded_sample =  UngriddedData(data,
-                                      Metadata(name='cth_msg', units='km'),
+                                      Metadata(name='cth_caliop', units='km'),
                                       CoordList([lats, lons, time]))
 
     return ungridded_sample
@@ -47,12 +45,12 @@ def load_npp_cth(filename):
     pps_filename = glob.glob(os.path.join(basedir,'..','..', 'import', 'PPS_data', 'remapped', '*_{}'.format(basename.split('_')[-1]) ))[0]
     pps_dst = h5py.File(pps_filename)
     lat = pps_dst['where']['lat']['data'][:]*0.001
-    lon = pps_dst['where']['lat']['data'][:]*0.001
+    lon = pps_dst['where']['lon']['data'][:]*0.001
     cth_dst = h5py.File(filename)
     cth = cth_dst['ctth_alti'][:] * float(cth_dst['ctth_alti'].attrs[u'scale_factor']) + float(cth_dst['ctth_alti'].attrs[u'add_offset']) / 1000.
     data = cth
     lats = Coord(lat, Metadata(standard_name='latitude', units='degrees'), 'y')
-    lons = Coord(lon, Metadata(standard_name='longitude', units='degrees', 'x')
+    lons = Coord(lon, Metadata(standard_name='longitude', units='degrees'), 'x')
 
     ungridded_sample = UngriddedData(data,
                                      Metadata(name='cth_npp', units='km'),
@@ -82,14 +80,26 @@ def load_msg_cth(filename):
     lats = Coord(lat, Metadata(standard_name='latitude', units='degrees'), 'y')
     lons = Coord(lon, Metadata(standard_name='longitude', units='degrees'), 'x')
     time = Coord(time, Metadata(standard_name='time', units='days since 2015-07-11'), axis='t')
-    ungridded_sample =  UngriddedData(data, Metadata(name='cth_caliop', units='km'), CoordList([lats, lons, time]))
+    ungridded_sample =  UngriddedData(data, Metadata(name='cth_msg', units='km'), CoordList([lats, lons, time]))
 
     return ungridded_sample
 
 
-def cis_compare_npp_calipso(m1, m2):
-    time_interval = 'PT3M30S'
-    return m1.collocated_onto(m1, t_sep=time_interval)
+def compare_data(m1, m2, lat_range=None, lon_range=None, h_sep=None, t_sep=None):
+    m1_sub = m1.subset(x=lon_range, y=lat_range)
+    m2_sub = m2.subset(x=lon_range, y=lat_range)
+
+    kernel = nn_horizontal()
+
+    res1 = m1_sub.sampled_from(m2_sub, h_sep=h_sep, t_sep=t_sep, kernel=kernel)
+    m1_df = m1_sub.as_data_frame()
+    r1_df = res1[0].as_data_frame()
+
+    df = m1_df.merge(r1_df, right_index=True, left_index=True,
+                      how='outer').reset_index()
+    import ipdb; ipdb.set_trace()
+    return df
+
 
 def main():
     p = argparse.ArgumentParser()
@@ -107,18 +117,14 @@ def main():
     lat_range = [60, 64]
     h_sep = '1km'
     t_sep = 'PT220M'
-    msg_sub = msg.subset(x=lon_range, y=lat_range)
-    cal_sub = calipso.subset(x=lon_range, y=lat_range)
-    res1 = cal_sub.sampled_from(msg_sub, h_sep=h_sep, t_sep=t_sep, kernel=nn_horizontal())
-    cal_df = cal_sub.as_data_frame()
-    res1df = res1[0].as_data_frame()
 
-    df = cal_df.merge(res1df, right_index=True, left_index=True,
-                      how='outer').reset_index()
-    df.plot(kind='scatter', x='cth_caliop', y='cth_msg')
-    print df.corr()
-    pyplot.savefig('scatter.png')
-    # import ipdb; ipdb.set_trace()
+    df = compare_data(calipso,
+                      msg,
+                      lat_range=lat_range,
+                      lon_range=lon_range,
+                      h_sep=h_sep,
+                      t_sep=t_sep)
+
 
 if __name__ == "__main__":
     main()
