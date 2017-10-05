@@ -11,9 +11,9 @@ setuptools.setup(name='ctmatch',
                  py_modules=['ctmatch'],
 
                  install_requires=['satpy',
-                                    'cis',
-                                    'numpy',
-                                    'trollsched'],
+                                   'cis',
+                                   'numpy',
+                                   'trollsched'],
 
                  license='Lesser GPL v3.0',
                  zip_safe=False,
